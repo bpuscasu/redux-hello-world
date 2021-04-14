@@ -1,7 +1,9 @@
 const path = require('path')
+const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
+  mode: 'development',
   entry: path.resolve(__dirname, 'src', 'index.js'),
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -11,12 +13,13 @@ module.exports = {
     contentBase: path.resolve(__dirname, 'dist'),
     open: true,
     clientLogLevel: 'silent',
-    port: 3000
+    port: 3000,
+    hot: true
   },
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.(jsx|js)$/,
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader'
@@ -28,5 +31,8 @@ module.exports = {
       }
     ]
   },
- plugins: [new HtmlWebpackPlugin({ template: './public/index.html', favicon: './public/favicon.ico' })],
+  plugins: [
+    new webpack.HotModuleReplacementPlugin(),
+    new HtmlWebpackPlugin({ template: './public/index.html', favicon: './public/favicon.ico' })
+  ],
 }
