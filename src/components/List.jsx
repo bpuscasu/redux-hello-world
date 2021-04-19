@@ -1,8 +1,15 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { fetchArticles } from '../thunk';
 
 const List = () => {
   const articles = useSelector(state => state.articles);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchArticles);
+  }, []);
 
   return (
     <ul className='list-group list-group-flush'>
